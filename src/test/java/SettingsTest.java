@@ -1,3 +1,4 @@
+import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
 import org.junit.After;
 import org.junit.Before;
@@ -5,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
+//import java.util.logging.Logger;
 
 public class SettingsTest {
     //    private static final Logger log = LogManager.getRootLogger();
@@ -22,7 +23,7 @@ public class SettingsTest {
         System.setProperty("webdriver.chrome.driver","/home/ytka/IdeaProjects/drivingQuestNew/src/main/resources/chromedriver");
         driver = new ChromeDriver();
 //      driver.get("http://gym.web-102.net/public/api/login");
-       driver.get("http://dquest.web-104.net/public/api/login");
+        driver.get("http://dquest.web-104.net/public/api/login");
         log.info("Open Web App");
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
@@ -30,9 +31,9 @@ public class SettingsTest {
     @After
     public void tearDownTest(){
         if (driver != null){
-//           System.out.println("Tear Down Method");
-//           log.info("Tear Down Method");
-//           driver.close();
+           System.out.println("Tear Down Method");
+           log.info("Tear Down Method");
+           driver.close();
         }
     }
 }

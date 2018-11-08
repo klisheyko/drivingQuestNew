@@ -15,10 +15,15 @@ public class Dashboard {
     }
 
     //   LOCATORS
+    By nextSlideLocator1 = By.cssSelector("button.course-next");
     By nextSlideLocator = By.cssSelector(".course-next");
+
+
     By continueCourseButtonLocator = By.cssSelector("button.btn-course span");
-    By dashboardCourseButtonLocator = By.cssSelector("a.button.btn-course");
-    By dashboardCourseButtonLocator1 = By.xpath("//a[@class='btn btn-course']");
+
+    By dashboardCourseButtonLocator = By.cssSelector("#continue");
+
+    By dashboardCourseButtonLocator1 = By.cssSelector("#wrapper > div.content-page > div.score-box > div > div > div.col-md-4.text-right > div > form > div > button");
     By startCourseLocator = By.cssSelector("button.btn.btn-course");
     By finishCourseLocator = By.xpath("//p[contains(text(),'You have completed your course. We will send you certification shortly.')]");
     By LogOutLocator = By.xpath("//a[@class='dark']");
@@ -27,7 +32,7 @@ public class Dashboard {
     By returnToDashboardLocator = By.xpath("//a[contains(text(),'Return to dashboard')]");
     By submitVideoQuestLocator = By.xpath("//button[contains(text(),'Submit')]");
     By textChouseWayLocator = By.xpath("//p[contains(text(),'Texas requires teen students to complete 14 Hours of Behind-the-Wheel training with a Parent-Instructor or with a Driving School. How do you wish to complete these hours?')]");
-    By parentTaughtLocator = By.cssSelector("button.button.primary");
+    By parentTaughtLocator = By.xpath("//button[@value='PT']");
     By validationLastAnswerLocator = By.cssSelector("div[class*='answer-item']");
     By submitValidationLocator = By.xpath("//button[contains(text(),'Submit')]");
     By timeRemainingLocator = By.xpath("//span[contains(text(),'Time Remaining ')]");
@@ -42,40 +47,35 @@ public class Dashboard {
 
             switch (pageType){
                 case Dashboard:
-                    if(driver.findElement(dashboardCourseButtonLocator1)!=null){
-                        Assert.assertNotNull(dashboardCourseButtonLocator1);
-                        driver.findElement(dashboardCourseButtonLocator1).click();
-                    }if (driver.findElement(compiteCourseLocator)!=null){
+                    if(driver.findElement(dashboardCourseButtonLocator).isDisplayed()){
+                        Assert.assertNotNull(dashboardCourseButtonLocator);
+                        driver.findElement(dashboardCourseButtonLocator).click();
+                        break;
+                    }if (driver.findElement(compiteCourseLocator).isDisplayed()){
                          driver.findElement(LogOutLocator).click();
                 }
                     break;
                 case Slide:
                     driver.get(driver.getCurrentUrl() + "?notimer=1");
                     driver.navigate().forward();
-//                    Assert.assertEquals("Time Remaining", driver.findElement(timeRemainingLocator).getText());
-//                    Assert.assertNotNull(nextSlideLocator);
 
-//                    if(driver.findElement(textChouseWayLocator).isEnabled()){
-//                        driver.findElement(parentTaughtLocator).click();
-//                    }else
+                    if (driver.findElement(nextSlideLocator).isDisplayed() || driver.findElement(nextSlideLocator1).isDisplayed()){
+                        driver.findElement(nextSlideLocator).click();
+                    }else
 
-//                    if (driver.findElement(parentTaughtLocator) !=null){
-//                        break;
-//                    }
-                    driver.findElement(nextSlideLocator).click();
-//                    String slideNumber = driver.findElement(slideNumberLocator).getText();
-//                    System.out.println(slideNumber);
-//                    log.info(slideNumber);
+                    driver.findElement(parentTaughtLocator).click();
                     break;
                 case Quiz:
                     driver.get(driver.getCurrentUrl() + "?notimer=1");
                     driver.navigate().forward();
                     List<WebElement> myList=driver.findElements(backgroundGreenLocator);
                     for (WebElement aMyList : myList) {
+
                         aMyList.click();
+
                         log.debug("List of answer choices in the test Quiz");
                     }
-//                    Assert.assertNotNull(submitQuizLocator);
+
                     driver.findElement(submitQuizLocator).click();
                     log.info("Submit Quiz Button");
                     Assert.assertNotNull(returnToDashboardLocator);
@@ -100,6 +100,7 @@ public class Dashboard {
                     break;
                 case Validation:
                     driver.navigate().refresh();
+                    driver.get(driver.getCurrentUrl() + "?notimer=1");
                     List<WebElement> myList1=driver.findElements(validationLastAnswerLocator);
                     myList1.get(myList1.size() - 1).click();
                     Assert.assertNotNull(submitValidationLocator);
@@ -117,7 +118,12 @@ public class Dashboard {
                     log.info("The course is over. Press the 'Sign Out'");
                     break;
                 default:
-                    log.error("LogOut button pressed. AutoTest Was Stopped");
+                    try {
+                        wait(1200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    log.error("WAIT");
                     break;
             }
         return actionsOnPages();
@@ -142,10 +148,8 @@ public class Dashboard {
                     return PageType.Dashboard;
                 }else if (driver.findElement(finishCourseLocator) != null) {
                 return PageType.Finish;
-//                driver.findElement(LogOutLocator).click();
                 } else if (driver.findElement(startCourseLocator) != null) {
                 return PageType.Start;
-//                driver.findElement(startCourseLocator).click();
                 }
                  return PageType.Unknown;
            }

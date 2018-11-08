@@ -25,29 +25,28 @@ public class RegistratioOfNewUser {
 
 
     public SandboxPaypal registerNewUserPayPal(WebDriver driver){
-        this.driver.navigate().to("http://dquest.web-104.net/public/api/register/purchase/texas-teen-course?nocharge");
 
-        WebElement choosePaymentThroughPayPal = this.driver.findElement(choosePaymentThroughPayPalLocator);
+        WebElement choosePaymentThroughPayPal = driver.findElement(choosePaymentThroughPayPalLocator);
         choosePaymentThroughPayPal.click();
 
-        WebElement studentNamePayPal = this.driver.findElement(nameStudentPayPalLocator);
+        WebElement studentNamePayPal = driver.findElement(nameStudentPayPalLocator);
         studentNamePayPal.sendKeys(authorization.getFirstAndLastName());
 
-        WebElement emailPayPal = this.driver.findElement(emailPayPalLocator);
+        WebElement emailPayPal = driver.findElement(emailPayPalLocator);
         emailPayPal.sendKeys(authorization.getEmailLogin());
 
-        WebElement createPassword = this.driver.findElement(createPasswordLocator);
+        WebElement createPassword = driver.findElement(createPasswordLocator);
         createPassword.sendKeys(authorization.getPasswordLogin());
 
-        WebElement confirmPasswordPayPal = this.driver.findElement(confirmPasswordPayPalLocator);
+        WebElement confirmPasswordPayPal = driver.findElement(confirmPasswordPayPalLocator);
         confirmPasswordPayPal.sendKeys(authorization.getPasswordLogin());
 
-        WebElement checkBoxIaMleast18YearsOld = this.driver.findElement(checkBoxIaMleast18YearsOldLocator);
+        WebElement checkBoxIaMleast18YearsOld = driver.findElement(checkBoxIaMleast18YearsOldLocator);
         checkBoxIaMleast18YearsOld.click();
 
-        WebElement purchesButton = this.driver.findElement(checkOutWithPayPalLocator);
+        WebElement purchesButton = driver.findElement(checkOutWithPayPalLocator);
         purchesButton.click();
 
-        return new SandboxPaypal(this.driver);
+        return new SandboxPaypal(driver);
     }
 }

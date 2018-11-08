@@ -8,8 +8,10 @@ public class Authorization {
     private WebDriver driver;
 //    private String emailLogin = "klishk1@inbox.ru" ;
 //    private String passwordLogin = "klisheyko123!!!!";
-    private String emailLogin = "testklish@inbox.ru" ;
-    private String passwordLogin = "klisheyko123!!!!";
+//    private String emailLogin = "testklish@inbox.ru" ;
+//    private String passwordLogin = "klisheyko123!!!!";
+    private String emailLogin = "klisheyko2@yandex.ru" ;
+    private String passwordLogin = "6d30a6e1";
 
     public String getEmailOfUserRealPatPal() {
         return emailOfUserRealPatPal;
@@ -26,14 +28,14 @@ public class Authorization {
     private static final org.apache.log4j.Logger log = LogManager.getRootLogger();
 
 //    testing credit card: 4242424242424242
-//cv = 543
+//                         cv = 543
 //    klishk060@gmail.com
 
     //   LOCATORS
     By emailLoginLocator = By.xpath("//input[@id='email']");
     By passwordLoginLocator = By.xpath("//input[@id='password']");
     By buttonLoginLocator = By.xpath("//button[@type='submit']");
-    By nameOfCurrentUserLocator = By.xpath("//h2[contains(text(),'Hi KLISHK KLISHK!')]");
+    By nameOfCurrentUserLocator = By.xpath("//h2[contains(text(),'Hi Oleksandr Klysheiko!')]");
 
 
     By choosePaymentThroughPayPalLocator = By.xpath("//a[@href='#paypal']");
@@ -79,11 +81,11 @@ public class Authorization {
     public Dashboard buttonAuthorization(){
         driver.findElement(buttonLoginLocator).click();
         log.info("make click on button Login");
-//        Assert.assertEquals("Hi KLISHK KLISHK!", driver.findElement(nameOfCurrentUserLocator).getText());
+        Assert.assertEquals("Hi Oleksandr Klysheiko!", driver.findElement(nameOfCurrentUserLocator).getText());
     return new Dashboard(driver);
     }
 
     public void checkAuthorization(){
-//        Assert.assertEquals("Hi KLISHK KLISHK!", driver.findElement(nameOfCurrentUserLocator).getText());
+        Assert.assertEquals("Hi Oleksandr Klysheiko!", driver.findElement(nameOfCurrentUserLocator).getText());
     }
 }
